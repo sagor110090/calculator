@@ -27,5 +27,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Blogs
     Route::delete('blogs/destroy', 'BlogController@massDestroy')->name('blogs.massDestroy');
+    Route::post('blogs/media', 'BlogController@storeMedia')->name('blogs.storeMedia');
     Route::resource('blogs', 'BlogController');
 });
