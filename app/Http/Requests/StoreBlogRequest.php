@@ -25,6 +25,9 @@ class StoreBlogRequest extends FormRequest
             'blog'  => [
                 'required',
             ],
+            'image' => [
+                'required',
+            ],
         ];
     }
 }
