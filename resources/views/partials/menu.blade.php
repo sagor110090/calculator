@@ -85,15 +85,37 @@
                     </li>
                 @endcan
                 <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                        <p>
-                            <i class="fas fa-fw fa-sign-out-alt">
+                    <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
+                        <i class="fas fa-fw fa-calendar">
 
-                            </i>
-                            <span>{{ trans('global.logout') }}</span>
+                        </i>
+                        <p>
+                            <span>{{ trans('global.systemCalendar') }}</span>
                         </p>
                     </a>
                 </li>
+                @php($unread = \App\QaTopic::unreadCount())
+                    <li class="nav-item">
+                        <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is('admin/messenger') || request()->is('admin/messenger/*') ? 'active' : '' }} nav-link">
+                            <i class="fa-fw fa fa-envelope">
+
+                            </i>
+                            <span>{{ trans('global.messages') }}</span>
+                            @if($unread > 0)
+                                <strong>( {{ $unread }} )</strong>
+                            @endif
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                            <p>
+                                <i class="fas fa-fw fa-sign-out-alt">
+
+                                </i>
+                                <span>{{ trans('global.logout') }}</span>
+                            </p>
+                        </a>
+                    </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

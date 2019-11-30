@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Blog;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyBlogRequest;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('blog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -33,6 +36,10 @@ class BlogController extends Controller
     {
         $blog = Blog::create($request->all());
 
+        if ($request->input('image', false)) {
+            $blog->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+        }
+
         return redirect()->route('admin.blogs.index');
     }
 
@@ -46,6 +53,14 @@ class BlogController extends Controller
     public function update(UpdateBlogRequest $request, Blog $blog)
     {
         $blog->update($request->all());
+
+        if ($request->input('image', false)) {
+            if (!$blog->image || $request->input('image') !== $blog->image->file_name) {
+                $blog->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+            }
+        } elseif ($blog->image) {
+            $blog->image->delete();
+        }
 
         return redirect()->route('admin.blogs.index');
     }

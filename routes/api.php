@@ -11,5 +11,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('users', 'UsersApiController');
 
     // Blogs
+    Route::post('blogs/media', 'BlogApiController@storeMedia')->name('blogs.storeMedia');
     Route::apiResource('blogs', 'BlogApiController');
 });

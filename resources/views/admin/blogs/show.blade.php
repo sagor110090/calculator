@@ -39,6 +39,18 @@
                             {{ $blog->blog }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.blog.fields.image') }}
+                        </th>
+                        <td>
+                            @if($blog->image)
+                                <a href="{{ $blog->image->getUrl() }}" target="_blank">
+                                    <img src="{{ $blog->image->getUrl('thumb') }}" width="50px" height="50px">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
