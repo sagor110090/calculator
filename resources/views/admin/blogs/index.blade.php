@@ -32,6 +32,9 @@
                             {{ trans('cruds.blog.fields.blog') }}
                         </th>
                         <th>
+                            {{ trans('cruds.blog.fields.image') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -50,6 +53,13 @@
                             </td>
                             <td>
                                 {{ $blog->blog ?? '' }}
+                            </td>
+                            <td>
+                                @if($blog->image)
+                                    <a href="{{ $blog->image->getUrl() }}" target="_blank">
+                                        <img src="{{ $blog->image->getUrl('thumb') }}" width="50px" height="50px">
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 @can('blog_show')
